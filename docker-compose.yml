@@ -1,0 +1,16 @@
+services:
+  car-agent:
+    build: .
+    container_name: car-agent
+    restart: unless-stopped
+    ports:
+      # 8081 so it can share a machine with the apartment agent on 8080.
+      - "8081:8080"
+    volumes:
+      - ./data:/data
+    environment:
+      TZ: Europe/Berlin
+      # Set this to require a password for the dashboard (any username works).
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD:-}
+      # Mailbox password for mobile.de alert e-mails (Gmail: an app password).
+      IMAP_PASSWORD: ${IMAP_PASSWORD:-}
